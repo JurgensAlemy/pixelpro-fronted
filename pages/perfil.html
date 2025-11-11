@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../assets/favicons/favicon.ico" type="image/x-icon" />
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/perfilEstilos.css">
+  <title>Pixelpro - Mi Perfil</title>
+</head>
+
+<body>
+  <!-- Header cargado automáticamente -->
+  <header id="header"></header>
+
+  <!-- MAIN -->
+  <main class="container my-5">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/index.html" class="text-decoration-none">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Mi Perfil</li>
+      </ol>
+    </nav>
+
+    <!-- Título Principal -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <h1 class="h2 fw-bold d-flex align-items-center">
+          <i class="bi bi-person-circle me-3 text-primary fs-1"></i>
+          Mi Perfil
+        </h1>
+        <p class="text-muted">Administra tu información personal y configuraciones de cuenta</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Sidebar de navegación -->
+      <div class="col-lg-3 col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body p-0">
+            <div class="list-group list-group-flush">
+              <a href="#informacion-personal" class="list-group-item list-group-item-action active"
+                data-section="informacion-personal">
+                <i class="bi bi-person me-2"></i>Información Personal
+              </a>
+              <a href="#direcciones" class="list-group-item list-group-item-action" data-section="direcciones">
+                <i class="bi bi-geo-alt me-2"></i>Direcciones
+              </a>
+              <a href="#mis-pedidos" class="list-group-item list-group-item-action" data-section="mis-pedidos">
+                <i class="bi bi-bag-check me-2"></i>Mis Pedidos
+              </a>
+              <a href="#metodos-pago" class="list-group-item list-group-item-action" data-section="metodos-pago">
+                <i class="bi bi-credit-card me-2"></i>Métodos de Pago
+              </a>
+              <a href="#configuracion" class="list-group-item list-group-item-action" data-section="configuracion">
+                <i class="bi bi-gear me-2"></i>Configuración
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contenido principal -->
+      <div class="col-lg-9 col-md-8">
+        <!-- Información Personal -->
+        <section id="informacion-personal" class="profile-section">
+          <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h3 class="h5 mb-0">
+                <i class="bi bi-person me-2"></i>Información Personal
+              </h3>
+              <button class="btn btn-outline-primary btn-sm" onclick="editarInformacion()">
+                <i class="bi bi-pencil me-1"></i>Editar
+              </button>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-semibold text-muted">Nombre Completo</label>
+                  <p class="form-control-plaintext" id="nombreCompleto">Cargando...</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-semibold text-muted">Correo Electrónico</label>
+                  <p class="form-control-plaintext" id="correoElectronico">Cargando...</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-semibold text-muted">Teléfono</label>
+                  <p class="form-control-plaintext" id="telefono">No especificado</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-semibold text-muted">Fecha de Nacimiento</label>
+                  <p class="form-control-plaintext" id="fechaNacimiento">No especificado</p>
+                </div>
+                <div class="col-12 mb-3">
+                  <label class="form-label fw-semibold text-muted">DNI/Documento</label>
+                  <p class="form-control-plaintext" id="documento">No especificado</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Direcciones -->
+        <section id="direcciones" class="profile-section d-none">
+          <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h3 class="h5 mb-0">
+                <i class="bi bi-geo-alt me-2"></i>Mis Direcciones
+              </h3>
+              <button class="btn btn-primary btn-sm" onclick="agregarDireccion()">
+                <i class="bi bi-plus-circle me-1"></i>Agregar Dirección
+              </button>
+            </div>
+            <div class="card-body">
+              <div id="listaDirecciones">
+                <!-- Direcciones se cargarán aquí dinámicamente -->
+                <div class="text-center text-muted py-4">
+                  <i class="bi bi-house-add fs-1 mb-3 d-block"></i>
+                  <p>No tienes direcciones guardadas</p>
+                  <button class="btn btn-outline-primary" onclick="agregarDireccion()">
+                    <i class="bi bi-plus-circle me-1"></i>Agregar primera dirección
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Mis Pedidos -->
+        <section id="mis-pedidos" class="profile-section d-none">
+          <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h3 class="h5 mb-0">
+                <i class="bi bi-bag-check me-2"></i>Mis Pedidos
+              </h3>
+              <div>
+                <select class="form-select form-select-sm" id="filtroEstado" onchange="filtrarPedidos()">
+                  <option value="todos">Todos los pedidos</option>
+                  <option value="pendiente">Pendientes</option>
+                  <option value="procesando">Procesando</option>
+                  <option value="enviado">Enviados</option>
+                  <option value="entregado">Entregados</option>
+                  <option value="cancelado">Cancelados</option>
+                </select>
+              </div>
+            </div>
+            <div class="card-body">
+              <div id="listaPedidos">
+                <!-- Pedidos se cargarán aquí dinámicamente -->
+                <div class="pedido-item border rounded mb-3 p-3">
+                  <div class="row align-items-center">
+                    <div class="col-md-2 col-6">
+                      <strong>#001234</strong>
+                      <small class="text-muted d-block">15 Oct 2024</small>
+                    </div>
+                    <div class="col-md-3 col-6">
+                      <span class="badge bg-warning text-dark">Procesando</span>
+                    </div>
+                    <div class="col-md-3 col-6 mt-2 mt-md-0">
+                      <strong>S/ 299.90</strong>
+                      <small class="text-muted d-block">2 productos</small>
+                    </div>
+                    <div class="col-md-4 col-6 mt-2 mt-md-0 text-md-end">
+                      <button class="btn btn-outline-primary btn-sm me-2" onclick="verDetallePedido('001234')">
+                        <i class="bi bi-eye me-1"></i>Ver detalles
+                      </button>
+                      <button class="btn btn-outline-secondary btn-sm" onclick="rastrearPedido('001234')">
+                        <i class="bi bi-truck me-1"></i>Rastrear
+                      </button>
+                    </div>
+                  </div>
+                  <div class="collapse" id="detalle001234">
+                    <hr>
+                    <div class="row">
+                      <div class="col-md-8">
+                        <h6 class="mb-2">Productos:</h6>
+                        <div class="d-flex align-items-center mb-2">
+                          <img src="/assets/imgs/HyperX_Cloud_Core_USB.webp" alt="Producto" class="rounded me-3"
+                            style="width: 50px; height: 50px; object-fit: cover;">
+                          <div>
+                            <strong>HyperX Cloud Core USB</strong>
+                            <small class="text-muted d-block">Cantidad: 1 | S/ 199.90</small>
+                          </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                          <img src="/assets/imgs/Logitech_G203_USB.webp" alt="Producto" class="rounded me-3"
+                            style="width: 50px; height: 50px; object-fit: cover;">
+                          <div>
+                            <strong>Logitech G203 USB</strong>
+                            <small class="text-muted d-block">Cantidad: 1 | S/ 100.00</small>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <h6 class="mb-2">Información de envío:</h6>
+                        <p class="mb-1"><strong>Dirección:</strong></p>
+                        <small class="text-muted">Av. Javier Prado 123, San Isidro, Lima</small>
+                        <p class="mb-1 mt-2"><strong>Fecha estimada:</strong></p>
+                        <small class="text-muted">20 Oct 2024</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pedido-item border rounded mb-3 p-3">
+                  <div class="row align-items-center">
+                    <div class="col-md-2 col-6">
+                      <strong>#001233</strong>
+                      <small class="text-muted d-block">12 Oct 2024</small>
+                    </div>
+                    <div class="col-md-3 col-6">
+                      <span class="badge bg-success">Entregado</span>
+                    </div>
+                    <div class="col-md-3 col-6 mt-2 mt-md-0">
+                      <strong>S/ 150.00</strong>
+                      <small class="text-muted d-block">1 producto</small>
+                    </div>
+                    <div class="col-md-4 col-6 mt-2 mt-md-0 text-md-end">
+                      <button class="btn btn-outline-primary btn-sm me-2" onclick="verDetallePedido('001233')">
+                        <i class="bi bi-eye me-1"></i>Ver detalles
+                      </button>
+                      <button class="btn btn-outline-success btn-sm" onclick="calificarPedido('001233')">
+                        <i class="bi bi-star me-1"></i>Calificar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pedido-item border rounded mb-3 p-3">
+                  <div class="row align-items-center">
+                    <div class="col-md-2 col-6">
+                      <strong>#001232</strong>
+                      <small class="text-muted d-block">08 Oct 2024</small>
+                    </div>
+                    <div class="col-md-3 col-6">
+                      <span class="badge bg-primary">Enviado</span>
+                    </div>
+                    <div class="col-md-3 col-6 mt-2 mt-md-0">
+                      <strong>S/ 89.90</strong>
+                      <small class="text-muted d-block">1 producto</small>
+                    </div>
+                    <div class="col-md-4 col-6 mt-2 mt-md-0 text-md-end">
+                      <button class="btn btn-outline-primary btn-sm me-2" onclick="verDetallePedido('001232')">
+                        <i class="bi bi-eye me-1"></i>Ver detalles
+                      </button>
+                      <button class="btn btn-outline-secondary btn-sm" onclick="rastrearPedido('001232')">
+                        <i class="bi bi-truck me-1"></i>Rastrear
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Paginación -->
+                <nav aria-label="Paginación de pedidos" class="mt-4">
+                  <ul class="pagination pagination-sm justify-content-center">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" tabindex="-1">Anterior</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">Siguiente</a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Métodos de Pago -->
+        <section id="metodos-pago" class="profile-section d-none">
+          <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h3 class="h5 mb-0">
+                <i class="bi bi-credit-card me-2"></i>Métodos de Pago
+              </h3>
+              <button class="btn btn-primary btn-sm" onclick="agregarMetodoPago()">
+                <i class="bi bi-plus-circle me-1"></i>Agregar Método
+              </button>
+            </div>
+            <div class="card-body">
+              <div id="listaMetodosPago">
+                <!-- Métodos de pago se cargarán aquí dinámicamente -->
+                <div class="text-center text-muted py-4">
+                  <i class="bi bi-credit-card-2-front fs-1 mb-3 d-block"></i>
+                  <p>No tienes métodos de pago guardados</p>
+                  <button class="btn btn-outline-primary" onclick="agregarMetodoPago()">
+                    <i class="bi bi-plus-circle me-1"></i>Agregar primer método
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Configuración -->
+        <section id="configuracion" class="profile-section d-none">
+          <div class="card mb-4">
+            <div class="card-header">
+              <h3 class="h5 mb-0">
+                <i class="bi bi-gear me-2"></i>Configuración de Cuenta
+              </h3>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12 mb-4">
+                  <h6 class="fw-semibold">Notificaciones</h6>
+                  <div class="form-check form-switch mb-2">
+                    <input class="form-check-input" type="checkbox" id="notifEmail" checked>
+                    <label class="form-check-label" for="notifEmail">
+                      Recibir notificaciones por correo
+                    </label>
+                  </div>
+                  <div class="form-check form-switch mb-2">
+                    <input class="form-check-input" type="checkbox" id="notifPromos" checked>
+                    <label class="form-check-label" for="notifPromos">
+                      Recibir promociones y ofertas
+                    </label>
+                  </div>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="notifPedidos" checked>
+                    <label class="form-check-label" for="notifPedidos">
+                      Notificaciones de estado de pedidos
+                    </label>
+                  </div>
+                </div>
+                <div class="col-12 mb-4">
+                  <h6 class="fw-semibold">Seguridad</h6>
+                  <button class="btn btn-outline-warning mb-2 w-100" onclick="cambiarContrasena()">
+                    <i class="bi bi-key me-2"></i>Cambiar Contraseña
+                  </button>
+                </div>
+                <div class="col-12">
+                  <h6 class="fw-semibold text-danger">Zona de Peligro</h6>
+                  <button class="btn btn-outline-danger w-100" onclick="eliminarCuenta()">
+                    <i class="bi bi-trash me-2"></i>Eliminar Cuenta
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer cargado automáticamente -->
+  <footer id="footer" class="bg-light pt-5"></footer>
+
+  <!-- Scripts -->
+  <script type="module" src="/js/include.js"></script>
+  <script type="module" src="/js/auth/auth-header.js"></script>
+  <script>
+    // Navegación entre secciones
+    document.addEventListener('DOMContentLoaded', function () {
+      const sidebarLinks = document.querySelectorAll('[data-section]');
+      const sections = document.querySelectorAll('.profile-section');
+
+      sidebarLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          // Remover clase active de todos los links
+          sidebarLinks.forEach(l => l.classList.remove('active'));
+          // Agregar clase active al link clickeado
+          this.classList.add('active');
+
+          // Ocultar todas las secciones
+          sections.forEach(section => section.classList.add('d-none'));
+          // Mostrar la sección correspondiente
+          const targetSection = document.getElementById(this.dataset.section);
+          if (targetSection) {
+            targetSection.classList.remove('d-none');
+          }
+        });
+      });
+
+      // Cargar información del usuario
+      cargarInformacionUsuario();
+    });
+
+    async function cargarInformacionUsuario() {
+      try {
+        // Aquí se conectaría con la API para obtener datos del usuario
+        // Por ahora simulamos datos
+        document.getElementById('nombreCompleto').textContent = 'Juan Pérez Rodríguez';
+        document.getElementById('correoElectronico').textContent = 'juan.perez@example.com';
+        document.getElementById('telefono').textContent = '+51 999 888 777';
+        document.getElementById('fechaNacimiento').textContent = '15/03/1990';
+        document.getElementById('documento').textContent = '12345678';
+      } catch (error) {
+        console.error('Error al cargar información del usuario:', error);
+      }
+    }
+
+    function editarInformacion() {
+      alert('Función de editar información en desarrollo');
+    }
+
+    function agregarDireccion() {
+      alert('Función de agregar dirección en desarrollo');
+    }
+
+    function agregarMetodoPago() {
+      alert('Función de agregar método de pago en desarrollo');
+    }
+
+    function cambiarContrasena() {
+      alert('Función de cambiar contraseña en desarrollo');
+    }
+
+    function eliminarCuenta() {
+      if (confirm('¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.')) {
+        alert('Función de eliminar cuenta en desarrollo');
+      }
+    }
+
+    // Funciones para manejo de pedidos
+    function filtrarPedidos() {
+      const filtro = document.getElementById('filtroEstado').value;
+      const pedidos = document.querySelectorAll('.pedido-item');
+
+      pedidos.forEach(pedido => {
+        const badge = pedido.querySelector('.badge');
+        if (!badge) return;
+
+        const estado = badge.textContent.toLowerCase();
+
+        if (filtro === 'todos') {
+          pedido.style.display = 'block';
+        } else {
+          // Mapeo de estados en español a valores del filtro
+          const estadoMap = {
+            'pendiente': 'pendiente',
+            'procesando': 'procesando',
+            'enviado': 'enviado',
+            'entregado': 'entregado',
+            'cancelado': 'cancelado'
+          };
+
+          if (estadoMap[estado] === filtro) {
+            pedido.style.display = 'block';
+          } else {
+            pedido.style.display = 'none';
+          }
+        }
+      });
+    }
+
+    function verDetallePedido(pedidoId) {
+      const detalleElement = document.getElementById(`detalle${pedidoId}`);
+      const button = event.target.closest('button');
+
+      if (detalleElement) {
+        // Toggle del detalle usando Bootstrap Collapse
+        const bsCollapse = new bootstrap.Collapse(detalleElement, {
+          toggle: true
+        });
+
+        // Cambiar el texto del botón
+        const icon = button.querySelector('i');
+        const text = button.querySelector('.btn').textContent.includes('Ver') ? 'Ocultar detalles' : 'Ver detalles';
+        const iconClass = button.querySelector('.btn').textContent.includes('Ver') ? 'bi-eye-slash' : 'bi-eye';
+
+        setTimeout(() => {
+          button.innerHTML = `<i class="bi ${iconClass} me-1"></i>${text}`;
+        }, 100);
+      } else {
+        // Si no existe el detalle, simular carga de datos
+        alert(`Cargando detalles del pedido #${pedidoId}...`);
+      }
+    }
+
+    function rastrearPedido(pedidoId) {
+      // Aquí se abriría un modal o se redirige a una página de seguimiento
+      alert(`Rastreando pedido #${pedidoId}...\n\nEstado actual: En tránsito\nÚltima actualización: Hace 2 horas\nUbicación: Centro de distribución Lima`);
+    }
+
+    function calificarPedido(pedidoId) {
+      // Aquí se abriría un modal para calificar el pedido
+      const calificacion = prompt(`Califica tu experiencia con el pedido #${pedidoId}\n\nIngresa un número del 1 al 5:`);
+
+      if (calificacion && calificacion >= 1 && calificacion <= 5) {
+        alert(`¡Gracias por tu calificación de ${calificacion} estrellas!`);
+      } else if (calificacion !== null) {
+        alert('Por favor ingresa un número válido del 1 al 5');
+      }
+    }
+
+    function reordenar(pedidoId) {
+      if (confirm(`¿Deseas volver a ordenar los productos del pedido #${pedidoId}?`)) {
+        alert('Productos agregados al carrito. Redirigiendo al checkout...');
+      }
+    }
+
+    function descargarFactura(pedidoId) {
+      // Simular descarga de factura
+      alert(`Descargando factura del pedido #${pedidoId}...`);
+    }
+  </script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

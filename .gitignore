@@ -1,0 +1,57 @@
+####################################
+# === Frontend (HTML/CSS/JS con Node/npm) ===
+####################################
+
+# Dependencias
+node_modules/
+
+# Build / output
+dist/
+build/
+.cache/
+.vite/
+.angular/
+.next/
+.nuxt/
+out/
+.parcel-cache
+
+# Herramientas
+.eslintcache
+.tsbuildinfo
+
+####################################
+# === IDEs ===
+####################################
+
+# VS Code
+.vscode/
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# NetBeans
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+build/
+
+####################################
+# === General ===
+####################################
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp
+*.tmp
+*.swp

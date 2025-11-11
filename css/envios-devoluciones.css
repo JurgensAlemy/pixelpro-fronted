@@ -1,0 +1,253 @@
+/* ------------------------------------ */
+/* FUENTE PIXELADA GLOBAL              */
+/* ------------------------------------ */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* ------------------------------------ */
+/* BODY Y TIPOGRAFÍA                   */
+/* ------------------------------------ */
+body {
+  font-family: 'Press Start 2P', cursive;
+  background-color: #1702fff5;
+  color: #eee;
+  margin: 0;
+  padding: 0;
+}
+
+/* ------------------------------------ */
+/* HEADER Y LOGO                        */
+/* ------------------------------------ */
+/* header img {
+  height: 50px;
+  max-width: 100%;
+}
+
+header {
+  background-color: #fcfafc;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  gap: 15px;
+  justify-content: space-between;
+  z-index: 99;
+}
+
+.logo {
+  height: 50px;
+  width: 50px;
+} */
+
+/* ------------------------------------ */
+/* TIPOGRAFÍA PIXELADA DESTACADA       */
+/* ------------------------------------ */
+/* h1.pixel-font {
+  color: #ffffff;
+  text-shadow: 0 0 5px #ffffff;
+}
+
+h2.pixel-font,
+h3.pixel-font {
+  color: #fffffff5;
+  text-shadow: 0 0 5px #fffffff5;
+} */
+
+/* ------------------------------------ */
+/* NAVBAR (usa Bootstrap .nav-link)    */
+/* ------------------------------------ */
+/* .navegacion {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.navegacion a,
+.nav-link {
+  color: #ffffff !important;
+  text-decoration: none;
+  font-family: 'Press Start 2P', cursive;
+  position: relative;
+} */
+
+/* Efecto línea inferior animada */
+.navegacion a::after,
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 3px;
+  background: #ffffff;
+  border-radius: 5px;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform .5s;
+}
+
+.navegacion a:hover::after,
+.nav-link:hover::after {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+
+/* ------------------------------------ */
+/* FILTROS PERSONALIZADOS              */
+/* ------------------------------------ */
+.filtros-pixel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin: 20px auto;
+  padding: 16px;
+  background: rgb(255, 253, 253);
+  border: 2px dashed #fffffff5;
+  border-radius: 12px;
+  box-shadow: 0 0 12px #fffffff5;
+  font-family: 'Courier New', monospace;
+  max-width: 95%;
+}
+
+.filtro-pixel {
+  background: rgb(255, 255, 255);
+  color: #1702fff5;
+  border: 2px dashed #1702fff5;
+  padding: 10px 12px;
+  font-family: 'Courier New', monospace;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  min-width: 160px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.filtro-pixel:focus {
+  box-shadow: 0 0 8px #1702fff5;
+  background-color: rgb(255, 255, 255);
+}
+
+/* ------------------------------------ */
+/* FORMULARIOS CON INPUT/SELECT        */
+/* ------------------------------------ */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  justify-content: center;
+}
+
+.filtro-input,
+.filtro-select {
+  padding: 10px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+  border: 2px solid #fcfafc;
+  border-radius: 5px;
+  background-color: #fffffff5;
+  color: #ffffff;
+  width: 200px;
+  box-shadow: 2px 2px 0 #fffefe;
+  outline: none;
+}
+
+.filtro-input:focus,
+.filtro-select:focus {
+  border-color: #1702fff5;
+  box-shadow: 2px 2px 5px #1702fff5;
+}
+
+/* ------------------------------------ */
+/* FOOTER RETRO                        */
+/* ------------------------------------ */
+/* .footer-grid {
+  background-color: #1c1b1b;
+  color: #ffffff ;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 60px; 
+  padding: 60px 80px; 
+  font-size: 10px;
+  position: static;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.footer-grid > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.footer-title {
+  color: #ffffff ;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.footer-grid ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-grid ul li {
+  margin-bottom: 10px;
+}
+
+.footer-grid ul li a {
+  color: #ffffff ;
+  text-decoration: none;
+  font-size: 12px; 
+}
+
+.footer-grid ul li a:hover {
+  text-decoration: underline;
+} */
+
+/* Redes sociales */
+/* .social-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.social-icons img {
+  width: 20px;
+  height: 20px;
+}
+
+.footer-copy {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-top: 30px;
+  color: #888;
+  font-size: 10px;
+} */
+
+/* BOOTSTRAP ACCORDION PERSONALIZADO   */
+/* ------------------------------------ */
+/* .accordion-button {
+  background-color: #1e1d1d !important;
+  color: #fcfafc !important;
+  font-family: 'Press Start 2P', cursive;
+  border: 2px solid #1702fff5;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #1702fff5 !important;
+  color: #ffffff !important;
+}
+
+.accordion-body {
+  background: #fcfafc;
+  color: #1702fff5;
+  font-size: 12px;
+  border-left: 2px solid #1702fff5;
+  border-radius: 0 0 8px 8px;
+} */

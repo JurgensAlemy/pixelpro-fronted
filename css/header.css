@@ -1,0 +1,51 @@
+/* Estilos para el header y buscador */
+
+/* Contenedor de sugerencias */
+#suggestions,
+#suggestionsMobile {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 8px 8px;
+    background: white;
+}
+
+/* Items de sugerencias */
+#suggestions .list-group-item,
+#suggestionsMobile .list-group-item {
+    transition: background-color 0.2s ease;
+    border-left: none;
+    border-right: none;
+}
+
+#suggestions .list-group-item:first-child,
+#suggestionsMobile .list-group-item:first-child {
+    border-top: 1px solid #dee2e6;
+}
+
+#suggestions .list-group-item:hover,
+#suggestionsMobile .list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+/* Imagen del producto en sugerencias */
+#suggestions img,
+#suggestionsMobile img {
+    flex-shrink: 0;
+}
+
+/* Animación suave para las sugerencias */
+#suggestions,
+#suggestionsMobile {
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

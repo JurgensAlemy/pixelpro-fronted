@@ -1,0 +1,206 @@
+/* =====================
+   Fuente pixelada
+===================== */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+  font-family: 'Press Start 2P', cursive;
+  background-color: #1702fff5;
+  color: #eee;
+  margin: 0;
+  padding: 0;
+}
+
+/* =====================
+   Header & Nav
+===================== */
+header img.logo {
+  height: 50px;
+  width: auto;
+  max-width: 100%;
+}
+
+header {
+  background-color: #1e1d1d;
+}
+
+.navegacion a {
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.navegacion a:hover {
+  color: #fff;
+}
+
+.navegacion a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 3px;
+  background: #ffffff;
+  border-radius: 5px;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform .5s;
+}
+
+.navegacion a:hover::after {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+
+/* =====================
+   Titulares Pixelados
+===================== */
+h1.pixel-font {
+  color: #ffffff;
+  text-shadow: 0 0 5px #ffffff;
+}
+
+h2.pixel-font,
+h3.pixel-font {
+  color: #fff;
+  text-shadow: 0 0 5px #fff;
+}
+
+/* =====================
+   Filtros
+===================== */
+.filtros-pixel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin: 20px auto;
+  padding: 16px;
+  background: rgba(0, 255, 255, 0.05);
+  border: 2px dashed #5c2d63;
+  border-radius: 12px;
+  box-shadow: 0 0 12px #5c2d63;
+  font-family: 'Courier New', monospace;
+  max-width: 95%;
+}
+
+.filtro-pixel,
+.filtro-input,
+.filtro-select {
+  background: rgb(255, 251, 251);
+  color: #5c2d63;
+  border: 2px dashed #5c2d63;
+  padding: 10px 12px;
+  font-family: 'Courier New', monospace;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  min-width: 160px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.filtro-input,
+.filtro-select {
+  border: 2px solid #1e1d1d;
+  background-color: #fff;
+  color: #1e1d1d;
+  box-shadow: 2px 2px 0 #1e1d1d;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+}
+
+.filtro-pixel:focus,
+.filtro-input:focus,
+.filtro-select:focus {
+  box-shadow: 0 0 8px #5c2d63, 2px 2px 5px #ffcc00;
+  border-color: #ffcc00;
+  background-color: rgba(255, 252, 252, 0.999);
+}
+
+/* =====================
+   Footer
+===================== */
+.footer-grid {
+  background-color: #1e1d1d;
+  color: #eee;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px; 
+  padding: 60px 40px; 
+  font-size: 12px;
+  text-align: center;
+}
+
+.footer-title {
+  color: #ffffff;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.footer-grid ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-grid ul li {
+  margin-bottom: 10px;
+}
+
+.footer-grid ul li a {
+  color: #eee;
+  text-decoration: none;
+  font-size: 12px; 
+}
+
+.footer-grid ul li a:hover {
+  text-decoration: underline;
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.social-icons img {
+  width: 20px;
+  height: 20px;
+}
+
+.footer-copy {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-top: 30px;
+  color: #888;
+  font-size: 10px;
+}
+
+/* =====================
+   Accordion Bootstrap personalizado
+===================== */
+.accordion-button {
+  font-family: 'Press Start 2P', cursive;
+  background-color: #222;
+  color: #ffffff;
+  border: 2px solid #2600ff;
+  border-radius: 8px !important;
+  transition: background 0.3s ease;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #ffffff;
+  color: #2600ff;
+}
+
+.accordion-body {
+  background: #ffffff;
+  border-left: 2px solid #2600ff;
+  border-radius: 0 0 8px 8px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #2600ff;
+}

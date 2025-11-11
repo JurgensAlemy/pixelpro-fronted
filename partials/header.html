@@ -1,0 +1,98 @@
+<!-- Barra superior -->
+<link rel="stylesheet" href="/css/header.css">
+<div class="bg-dark text-white py-2">
+  <div class="container d-flex justify-content-center">
+    <i class="bi bi-truck me-2"></i> Envío gratis en pedidos superiores a S/200
+  </div>
+</div>
+
+<!-- Navbar principal -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-2">
+  <div class="container">
+    <!-- Botón hamburguesa (solo visible en móvil) -->
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#menuCategorias"
+      aria-controls="menuCategorias" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="bi bi-list fs-4"></i>
+    </button>
+
+    <!-- Logo centrado en móvil, izquierda en desktop -->
+    <a class="navbar-brand fw-bold fs-4 mx-auto mx-lg-0" href="../index.html">
+      <img src="/assets/icons/logo-pixelpro.webp" alt="Logo PixelPro" width="40" height="40" class="me-2">
+      PixelPro
+    </a>
+
+    <!-- Buscador (oculto en móvil, visible en desktop) -->
+    <div class="d-none d-lg-flex flex-grow-1 mx-4 position-relative" id="searchBar">
+      <form class="w-100" role="search" id="searchForm">
+        <div class="input-group">
+          <input class="form-control" type="search" placeholder="Buscar productos..." aria-label="Buscar"
+            id="searchInput">
+          <button class="btn btn-outline-secondary" type="submit">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+      </form>
+      <div id="suggestions" class="list-group position-absolute w-100 shadow-lg"
+        style="top: 100%; z-index: 1050; max-height: 400px; overflow-y: auto;"></div>
+    </div>
+
+    <!-- Íconos usuario y carrito -->
+    <div class="d-flex align-items-center gap-2">
+      <!-- Siempre dibujamos el icono de login por defecto -->
+      <span id="header-user" class="d-inline-block">
+        <a href="/pages/login.html" class="nav-link me-3">
+          <i class="bi bi-person fs-5"></i>
+        </a>
+      </span>
+
+      <a href="#" class="nav-link position-relative">
+        <i class="bi bi-cart fs-5"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+          0
+          <span class="visually-hidden">productos en carrito</span>
+        </span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- Buscador móvil (visible solo en móvil) -->
+<div class="d-lg-none bg-light py-3">
+  <div class="container d-flex justify-content-center align-items-center position-relative" id="searchBarMobile">
+    <form class="w-100" role="search" style="max-width: 400px;" id="searchFormMobile">
+      <div class="input-group">
+        <input class="form-control" type="search" placeholder="Buscar productos..." aria-label="Buscar"
+          id="searchInputMobile">
+        <button class="btn btn-outline-secondary" type="submit">
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+    </form>
+    <div id="suggestionsMobile" class="list-group position-absolute shadow-lg"
+      style="top: 100%; z-index: 1050; max-height: 400px; overflow-y: auto; max-width: 400px; width: 100%;"></div>
+  </div>
+</div>
+
+<!-- Menú de categorías colapsable -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm py-0">
+  <div class="container">
+    <div class="collapse navbar-collapse" id="menuCategorias">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item"><a class="nav-link category-link" data-category="all"
+            href="/pages/productos.html?categoria=all">Productos</a></li>
+        <li class="nav-item"><a class="nav-link category-link" data-category="monitores"
+            href="/pages/productos.html?categoria=monitores">Monitores</a></li>
+        <li class="nav-item"><a class="nav-link category-link" data-category="ratones"
+            href="/pages/productos.html?categoria=ratones">Mouses</a></li>
+        <li class="nav-item"><a class="nav-link category-link" data-category="audifonos"
+            href="/pages/productos.html?categoria=audifonos">Audífonos</a></li>
+        <li class="nav-item"><a class="nav-link category-link" data-category="teclados"
+            href="/pages/productos.html?categoria=teclados">Teclados</a></li>
+        <li class="nav-item"><a class="nav-link category-link" data-category="graficas"
+            href="/pages/productos.html?categoria=graficas">Tarjetas Gráficas</a></li>
+        <li class="nav-item"><a class="nav-link text-danger fw-bold category-link" data-category="ofertas"
+            href="/pages/productos.html?categoria=ofertas">Ofertas</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>

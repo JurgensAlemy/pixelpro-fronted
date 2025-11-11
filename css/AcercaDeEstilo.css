@@ -1,0 +1,82 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: black;
+    background-color: #ffff;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.logo-posicion {
+    justify-content: center;
+}
+
+
+
+/*--------Espacio quienes somos---------*/
+
+.img-AcercaDe {
+
+    width: 300px;
+    height: 600px;
+    object-fit: cover;
+
+}
+
+/*----------Seccion 1------------*/
+
+.descripcion {
+    height: 500px;
+    padding: 10px;
+}
+
+/* Opcional si quieres limitar el ancho del texto */
+.contenedor {
+    max-width: 600px;
+}
+
+.subtitulo3 {
+    font-size: 38px;
+    font-weight: bold;
+    padding: 1.0rem;
+}
+
+.texto3 {
+    padding: 10px;
+    font-size: 20px;
+
+}
+
+
+
+/*------------------------Seccion 2------------------*/
+
+.seccion2{
+
+    background-color: #ffff;
+    color: black;
+    
+}
+
+.subtitulo4{
+
+    font-size: 38px;
+    font-weight: bold;
+    padding: 1.0rem;
+
+}
+
+.A-Img {
+    align-items: center;
+    height: 220px;
+    width: 320px;
+
+}
+
+/*------------Cartas--------------*/
+

@@ -1,0 +1,216 @@
+/* --------------------------- */
+/* ESTILO GENERAL DEL CUERPO  */
+/* --------------------------- */
+/* body {
+  background-color: #ecb466; /* Fondo retro 
+  color: #5c2d63;
+  font-family: 'Courier New', monospace;
+  padding: 40px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+} */
+
+/* --------------------------- */
+/* ESTILO DEL TÍTULO PRINCIPAL */
+/* --------------------------- */
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #5c2d63;
+}
+
+/* --------------------------- */
+/* ESTILO DEL FORMULARIO      */
+/* --------------------------- */
+form {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 2px dashed #5c2d63;
+  border-radius: 12px;
+  background-color: #1a1a1a;
+}
+
+/* --------------------------- */
+/* LABELS BOOTSTRAP OVERRIDE   */
+/* --------------------------- */
+form label,
+.form-label {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+/* --------------------------- */
+/* INPUTS RETRO SOBRE BOOTSTRAP */
+/* --------------------------- */
+.form-control,
+.form-select,
+textarea {
+  background-color: #1e1d1d !important;
+  color: #ffffff !important;
+  border: 1px solid #5c2d63 !important;
+  border-radius: 5px;
+  font-family: 'Courier New', monospace;
+}
+
+.form-control:focus,
+.form-select:focus {
+  box-shadow: 0 0 6px #5c2d63 !important;
+  border-color: #5c2d63 !important;
+}
+
+/* --------------------------- */
+/* BOTÓN RETRO                */
+/* --------------------------- */
+.btn-pixel {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: #1e1d1d;
+  border: 2px solid #1e1d1d;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+  transition: all 0.2s ease;
+}
+
+.btn-pixel:hover {
+  background-color: #5c2d63;
+  color: #ffffff;
+  border-color: #5c2d63;
+}
+
+/* --------------------------- */
+/* BOTÓN DE REGRESAR          */
+/* --------------------------- */
+.flecha-regresar {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: transparent;
+  border: 2px dashed #ffffff;
+  color: #ffffff;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.flecha-regresar:hover {
+  background-color: #ffffff;
+  color: #1e1d1d;
+}
+
+/* --------------------------- */
+/* FOOTER RETRO               */
+/* --------------------------- */
+footer {
+  width: 100vw;
+  margin: 0;
+  left: 0;
+}
+
+.footer-grid {
+  background-color: #1e1d1d;
+  color: #eee;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+  padding: 40px 60px;
+  font-size: 12px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.footer-grid>div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-title {
+  color: #5c2d63;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.footer-grid ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-grid ul li {
+  margin-bottom: 10px;
+}
+
+.footer-grid ul li a {
+  color: #eee;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.footer-grid ul li a:hover {
+  text-decoration: underline;
+}
+
+/* --------------------------- */
+/* ICONOS SOCIALES EN FOOTER  */
+/* --------------------------- */
+.social-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.social-icons img {
+  width: 20px;
+  height: 20px;
+}
+
+.footer-copy {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-top: 20px;
+  color: #888;
+  font-size: 10px;
+}
+
+/* --------------------------- */
+/* FILTROS OPCIONALES          */
+/* --------------------------- */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  justify-content: center;
+}
+
+.filtro-input,
+.filtro-select {
+  padding: 10px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+  border: 2px solid #1e1d1d;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #1e1d1d;
+  width: 200px;
+  box-shadow: 2px 2px 0 #1e1d1d;
+  outline: none;
+}
+
+.filtro-input:focus,
+.filtro-select:focus {
+  border-color: #ffcc00;
+  box-shadow: 2px 2px 5px #ffcc00;
+}

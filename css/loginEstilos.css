@@ -1,0 +1,28 @@
+body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(120deg, #2d21cb, #9ba0d8);
+      font-family: 'Roboto', sans-serif;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+
+    .login-card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    footer {
+      background: #f8f9fa;
+    }

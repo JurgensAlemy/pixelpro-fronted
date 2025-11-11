@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-gray-100">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="../assets/favicons/favicon.ico" type="image/x-icon" />
+  <title>Dashboard | PixelPro</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+  
+  <!-- Tu CSS (opcional, si quieres usarlo) -->
+  <!-- <link rel="stylesheet" href="css/estilosPanelAdmin.css"> -->
+
+  <style>
+    /* Estilos para la barra lateral (como en tu foto) */
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem; /* py-3 px-4 */
+      font-size: 0.95rem;
+      color: rgb(209 213 219); /* text-gray-300 */
+      border-radius: 0.5rem; /* rounded-lg */
+      transition-property: color, background-color;
+      transition-duration: 200ms;
+    }
+    .sidebar-link:hover {
+      background-color: rgb(55 65 81); /* hover:bg-gray-700 */
+      color: rgb(255 255 255); /* hover:text-white */
+    }
+    .sidebar-link.active-nav {
+      background-color: rgb(37 99 235); /* bg-blue-600 */
+      color: rgb(255 255 255); /* text-white */
+      font-weight: 600; /* font-semibold */
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* shadow-md */
+    }
+
+    /* Estilos para el Modal (ya corregido, sin @apply) */
+    .modal {
+      display: none; 
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      transition: opacity 0.3s ease-out;
+    }
+    .modal.show {
+      display: flex;
+      opacity: 1;
+    }
+    .modal-content {
+      background-color: white;
+      border-radius: 0.5rem; 
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      width: 100%;
+      max-width: 32rem; /* max-w-lg */
+      transform: scale(0.95);
+      transition: all 0.3s ease-out;
+    }
+    .modal.show .modal-content {
+      transform: scale(1);
+    }
+  </style>
+</head>
+
+<body class="h-full flex font-sans text-gray-800">
+
+  <!-- Contenedor principal con barra lateral -->
+  <div class="flex h-screen w-full bg-gray-100">
+    
+    <!-- === BARRA LATERAL (Sidebar) === -->
+    <aside id="admin-sidebar" class="w-64 bg-gray-900 text-gray-200 flex flex-col shadow-lg">
+      <!-- Logo -->
+      <div class="flex items-center justify-center p-4 h-20 border-b border-gray-700">
+        <img src="../assets/icons/logo-pixelpro.webp" alt="Logo PixelPro" class="w-10 h-10 mr-2">
+        <span class="text-xl font-bold text-white">PixelPro <span class="font-normal text-blue-400">Admin</span></span>
+      </div>
+      
+      <!-- Navegación -->
+      <nav class="flex-grow px-3 py-4 space-y-2">
+        <a href="#" data-section="dashboard" class="sidebar-link active-nav">
+          <i class="bi bi-grid-1x2-fill w-6 text-center"></i>
+          <span class="ml-3">Dashboard</span>
+        </a>
+        <a href="#" data-section="products" class="sidebar-link">
+          <i class="bi bi-box-seam w-6 text-center"></i>
+          <span class="ml-3">Productos</span>
+        </a>
+        <a href="#" data-section="customers" class="sidebar-link">
+          <i class="bi bi-people w-6 text-center"></i>
+          <span class="ml-3">Clientes</span>
+        </a>
+        <a href="#" data-section="orders" class="sidebar-link">
+          <i class="bi bi-receipt w-6 text-center"></i>
+          <span class="ml-3">Pedidos</span>
+        </a>
+        <a href="#" data-section="stats" class="sidebar-link">
+          <i class="bi bi-bar-chart-line w-6 text-center"></i>
+          <span class="ml-3">Estadísticas</span>
+        </a>
+        <a href="#" data-section="config" class="sidebar-link">
+          <i class="bi bi-gear w-6 text-center"></i>
+          <span class="ml-3">Configuración</span>
+        </a>
+      </nav>
+      
+      <!-- Footer de la barra lateral (Perfil y Cerrar Sesión) -->
+      <div class="p-3 border-t border-gray-700">
+        <div class="flex items-center mb-3">
+          <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center font-bold text-white mr-3">
+            A
+          </div>
+          <div>
+            <div class="font-semibold text-white" id="admin-email">Cargando...</div>
+            <div class="text-xs text-gray-400">Administrador</div>
+          </div>
+        </div>
+        <a href="#" id="logout-button" class="sidebar-link !text-red-400 hover:!bg-red-800 hover:!text-white">
+          <i class="bi bi-box-arrow-left w-6 text-center"></i>
+          <span class="ml-3">Cerrar Sesión</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- === CONTENIDO PRINCIPAL (Main Content) === -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+      <!-- Header Superior (Solo para el nombre de la sección y botones) -->
+      <header class="h-20 bg-white shadow-sm border-b border-gray-200 flex items-center justify-between px-6">
+        <h1 id="section-title" class="text-2xl font-semibold text-gray-900">Dashboard</h1>
+        <div class="flex items-center space-x-3">
+          <button class="text-gray-500 hover:text-gray-800">
+            <i class="bi bi-bell-fill text-xl"></i>
+          </button>
+          <button class="text-gray-500 hover:text-gray-800">
+            <i class="bi bi-chat-left-text-fill text-xl"></i>
+          </button>
+        </div>
+      </header>
+  
+      <!-- Área de contenido principal con scroll -->
+      <main class="flex-grow p-6 overflow-y-auto">
+        
+        <!-- Mensaje de Carga (se oculta al verificar) -->
+        <div id="loading-message" class="flex items-center justify-center h-64 text-gray-600 text-lg">
+          <i class="bi bi-arrow-repeat text-4xl animate-spin me-3"></i>
+          Verificando permisos...
+        </div>
+
+        <!-- =========== SECCIÓN DASHBOARD (Visible por defecto) =========== -->
+        <div id="dashboard-section" class="admin-section">
+          <!-- Stats Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500">
+              <h3 class="text-sm font-medium text-gray-500 uppercase">Ventas (Mensual)</h3>
+              <p class="text-3xl font-bold text-gray-900 mt-2">S/ 40,000</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
+              <h3 class="text-sm font-medium text-gray-500 uppercase">Pedidos</h3>
+              <p class="text-3xl font-bold text-gray-900 mt-2">215</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-purple-500">
+              <h3 class="text-sm font-medium text-gray-500 uppercase">Productos</h3>
+              <p class="text-3xl font-bold text-gray-900 mt-2">156</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-yellow-500">
+              <h3 class="text-sm font-medium text-gray-500 uppercase">Clientes</h3>
+              <p class="text-3xl font-bold text-gray-900 mt-2">1,245</p>
+            </div>
+          </div>
+          
+          <!-- Últimos Pedidos y Actividad Reciente -->
+          <div class="flex flex-col lg:flex-row gap-6 mt-8">
+            <!-- Últimos Pedidos -->
+            <div class="w-full lg:w-2/3">
+              <h3 class="text-xl font-semibold text-gray-800 mb-4">Últimos Pedidos</h3>
+              <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                <div class="overflow-x-auto">
+                  <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-100">
+                      <tr>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase">#ID</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase">Cliente</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase">Producto</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase">Total</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase">Estado</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                      <tr>
+                        <td class="px-6 py-4 text-sm font-medium text-gray-900">#0012</td>
+                        <td class="px-6 py-4 text-sm text-gray-600">Juan Pérez</td>
+                        <td class="px-6 py-4 text-sm text-gray-600">Monitor Ultra HD</td>
+                        <td class="px-6 py-4 text-sm text-gray-800 font-medium">S/ 1,199</td>
+                        <td class="px-6 py-4 text-sm"><span class="px-3 py-1 rounded-full bg-green-100 text-green-800 font-medium text-xs">Completado</span></td>
+                        <td class="px-6 py-4 text-sm"><button class="text-blue-600 hover:text-blue-800"><i class="bi bi-eye-fill"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td class="px-6 py-4 text-sm font-medium text-gray-900">#0011</td>
+                        <td class="px-6 py-4 text-sm text-gray-600">María García</td>
+                        <td class="px-6 py-4 text-sm text-gray-600">Teclado Mecánico</td>
+                        <td class="px-6 py-4 text-sm text-gray-800 font-medium">S/ 449</td>
+                        <td class="px-6 py-4 text-sm"><span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 font-medium text-xs">Pendiente</span></td>
+                        <td class="px-6 py-4 text-sm"><button class="text-blue-600 hover:text-blue-800"><i class="bi bi-eye-fill"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td class="px-6 py-4 text-sm font-medium text-gray-900">#0010</td>
+                        <td class="px-6 py-4 text-sm text-gray-600">Carlos López</td>
+                        <td class="px-6 py-4 text-sm text-gray-600">Mouse Gaming</td>
+                        <td class="px-6 py-4 text-sm text-gray-800 font-medium">S/ 399</td>
+                        <td class="px-6 py-4 text-sm"><span class="px-3 py-1 rounded-full bg-blue-100 text-blue-800 font-medium text-xs">Enviado</span></td>
+                        <td class="px-6 py-4 text-sm"><button class="text-blue-600 hover:text-blue-800"><i class="bi bi-eye-fill"></i></button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- Actividad Reciente -->
+            <div class="w-full lg:w-1/3">
+              <h3 class="text-xl font-semibold text-gray-800 mb-4">Actividad Reciente</h3>
+              <div class="bg-white shadow-lg rounded-lg p-6 space-y-4">
+                <div class="flex">
+                  <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-4">
+                    <i class="bi bi-cart-check-fill text-green-600"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-800 font-medium">Nuevo pedido <span class="text-blue-600">#0012</span></p>
+                    <p class="text-xs text-gray-500">Hace 5 minutos</p>
+                  </div>
+                </div>
+                <div class="flex">
+                  <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-4">
+                    <i class="bi bi-person-plus-fill text-blue-600"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-800 font-medium">Nuevo cliente registrado</p>
+                    <p class="text-xs text-gray-500">Hace 1 hora</p>
+                  </div>
+                </div>
+                <div class="flex">
+                  <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center mr-4">
+                    <i class="bi bi-box-seam text-purple-600"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-800 font-medium">Producto actualizado</p>
+                    <p class="text-xs text-gray-500">Hace 2 horas</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- =========== SECCIÓN DE PRODUCTOS (Oculta por defecto) =========== -->
+        <div id="products-section" class="admin-section hidden">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-semibold text-gray-900">Gestionar Productos</h2>
+            <button onclick="openProductModal()"
+              class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg flex items-center shadow-md transform hover:scale-105 transition-transform duration-200">
+              <i class="bi bi-plus-circle me-2"></i>
+              Crear Producto
+            </button>
+          </div>
+          <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-100">
+                  <tr>
+                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">ID</th>
+                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Nombre</th>
+                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Descripción</th>
+                    <th class="px-6 py-3 text-right text-sm font-semibold text-gray-700 uppercase tracking-wider">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200" id="products-table-body">
+                  <!-- Carga de JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+        <!-- =========== SECCIÓN DE CLIENTES (Oculta por defecto) =========== -->
+        <div id="customers-section" class="admin-section hidden">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-semibold text-gray-900">Gestionar Clientes</h2>
+             <button onclick="openCustomerModal()"
+              class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg flex items-center shadow-md transform hover:scale-105 transition-transform duration-200">
+              <i class="bi bi-plus-circle me-2"></i>
+              Crear Cliente
+            </button>
+          </div>
+          <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-100">
+                  <tr>
+                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">ID</th>
+                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Nombre Completo</th>
+                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Email</th>
+                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Teléfono</th>
+                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Documento</th>
+                    <th class="px-6 py-3 text-right text-sm font-semibold text-gray-700 uppercase tracking-wider">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200" id="customers-table-body">
+                  <!-- Carga de JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- =========== SECCIÓN DE PEDIDOS (Oculta y deshabilitada) =========== -->
+        <div id="orders-section" class="admin-section hidden">
+          <h2 class="text-2xl font-semibold text-gray-900">Gestionar Pedidos</h2>
+          <p class="text-gray-600 mt-2">Esta sección está en construcción.</p>
+        </div>
+        <!-- =========== SECCIÓN DE ESTADÍSTICAS (Oculta y deshabilitada) =========== -->
+        <div id="stats-section" class="admin-section hidden">
+          <h2 class="text-2xl font-semibold text-gray-900">Estadísticas</h2>
+          <p class="text-gray-600 mt-2">Esta sección está en construcción.</la>
+        </div>
+        <!-- =========== SECCIÓN DE CONFIGURACIÓN (Oculta y deshabilitada) =========== -->
+        <div id="config-section" class="admin-section hidden">
+          <h2 class="text-2xl font-semibold text-gray-900">Configuración</h2>
+          <p class="text-gray-600 mt-2">Esta sección está en construcción.</p>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  
+  <!-- =========== MODALES (Se quedan fuera) =========== -->
+
+  <!-- Modal para Crear/Editar Producto -->
+  <div id="product-modal" class="modal">
+    <div class="modal-content p-0">
+      <div class="flex justify-between items-center p-4 border-b border-gray-200">
+        <h3 class="text-lg font-medium leading-6 text-gray-900" id="product-modal-title">Crear Producto</h3>
+        <button onclick="closeProductModal()" class="text-gray-400 hover:text-gray-600">
+          <i class="bi bi-x-lg text-xl"></i>
+        </button>
+      </div>
+      <form id="product-form" class="p-6">
+        <div>
+          <label for="product-name" class="block text-sm font-medium text-gray-700">Nombre del Producto</label>
+          <input type="text" name="product-name" id="product-name" required
+            class="mt-1 block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm">
+        </div>
+        <div class="mt-4">
+          <label for="product-description" class="block text-sm font-medium text-gray-700">Descripción</label>
+          <textarea id="product-description" name="product-description" rows="3" required
+            class="mt-1 block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"></textarea>
+        </div>
+        <div class="mt-6 flex justify-end space-x-3">
+          <button type="button" onclick="closeProductModal()"
+            class="bg-white py-2 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300">
+            Cancelar
+          </button>
+          <button type="submit"
+            class="bg-blue-600 hover:bg-blue-700 border border-transparent rounded-lg shadow-sm py-2 px-4 text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Modal para Crear/Editar Cliente -->
+  <div id="customer-modal" class="modal">
+    <div class="modal-content p-0">
+      <div class="flex justify-between items-center p-4 border-b border-gray-200">
+        <h3 class="text-lg font-medium leading-6 text-gray-900" id="customer-modal-title">Crear Cliente</h3>
+        <button onclick="closeCustomerModal()" class="text-gray-400 hover:text-gray-600">
+          <i class="bi bi-x-lg text-xl"></i>
+        </button>
+      </div>
+      <form id="customer-form" class="p-6 space-y-4">
+        <div class="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
+          <div class="sm:col-span-3">
+            <label for="customer-firstName" class="block text-sm font-medium text-gray-700">Nombres</label>
+            <input type="text" id="customer-firstName" required class="mt-1 block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm">
+          </div>
+          <div class="sm:col-span-3">
+            <label for="customer-lastName" class="block text-sm font-medium text-gray-700">Apellidos</label>
+            <input type="text" id="customer-lastName" required class="mt-1 block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm">
+          </div>
+          <div class="sm:col-span-6">
+            <label for="customer-email" class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" id="customer-email" required class="mt-1 block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm">
+          </div>
+          <div class="sm:col-span-3">
+            <label for="customer-phone" class="block text-sm font-medium text-gray-700">Teléfono</LabeL>
+            <input type="tel" id="customer-phone" required class="mt-1 block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm">
+          </div>
+          <div class="sm:col-span-3">
+            <label for="customer-docType" class="block text-sm font-medium text-gray-700">Tipo Doc.</label>
+            <select id="customer-docType" required class="mt-1 block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm">
+              <option value="DNI">DNI</option>
+              <option value="RUC">RUC</option>
+              <option value="PASSPORT">Pasaporte</option>
+            </select>
+          </div>
+           <div class="sm:col-span-3">
+            <label for="customer-docNum" class="block text-sm font-medium text-gray-700">Num. Doc.</label>
+            <input type="text" id="customer-docNum" required class="mt-1 block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm">
+          </div>
+          <div class="sm:col-span-3">
+            <label for="customer-type" class="block text-sm font-medium text-gray-700">Tipo Cliente</label>
+            <select id="customer-type" required class="mt-1 block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm">
+              <option value="NATURAL">Natural</option>
+              <option value="COMPANY">Empresa</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="mt-6 flex justify-end space-x-3">
+          <button type="button" onclick="closeCustomerModal()"
+            class="bg-white py-2 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300">
+            Cancelar
+          </button>
+          <button type="submit"
+            class="bg-blue-600 hover:bg-blue-700 border border-transparent rounded-lg shadow-sm py-2 px-4 text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de Confirmación de Borrado -->
+  <div id="delete-modal" class="modal">
+    <div class="modal-content max-w-md p-6">
+      <div class="sm:flex sm:items-start">
+        <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+          <i class="bi bi-exclamation-triangle-fill text-red-600 text-xl"></i>
+        </div>
+        <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+          <h3 class="text-lg font-medium text-gray-900">Confirmar Eliminación</h3>
+          <div class="mt-2">
+            <p class="text-sm text-gray-500">¿Estás seguro de que quieres eliminar este <span id="delete-item-type"></span>? Esta acción no se puede deshacer.</p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+        <button id="confirm-delete-button" type="button"
+          class="inline-flex w-full justify-center rounded-lg bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">
+          Eliminar
+        </button>
+        <button type="button" onclick="closeDeleteModal()"
+          class="mt-3 inline-flex w-full justify-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenedor de Toast/Notificación -->
+  <div id="toast-container" class="fixed top-5 right-5 z-[100] space-y-3">
+    <!-- Las notificaciones se añadirán aquí -->
+  </div>
+
+
+  <!-- ============================================== -->
+  <!--      INICIO DEL JAVASCRIPT DEL DASHBOARD       -->
+  <!-- ============================================== -->
+  
+  <script typea="module">
+    // Este script contiene TODA la lógica del panel de admin.
+    // No necesitas ningún otro archivo .js (excepto el header y el include.js)
+
+    // === 1. API DE AUTENTICACIÓN (Copia de auth-api.js) ===
+    // Como borraste los archivos JS, los ponemos aquí.
+    
+    const AUTH_API_URL = 'http://localhost:8080/api/auth';
+    const ADMIN_API_URL = 'http://localhost:8080/api/admin';
+    const API_OPTS = {
+      headers: { "Content-Type": "application/json" },
+      credentials: "include" // ¡Muy importante para las cookies!
+    };
+
+    /**
+     * Llama a /me para verificar la sesión actual.
+     */
+    async function me() {
+      try {
+        const res = await fetch(`${AUTH_API_URL}/me`, { ...API_OPTS, method: "GET" });
+        // Si la sesión no existe (403) o hay un error, devuelve no autenticado
+        if (!res.ok) { 
+          return { authenticated: false, roles: [] }; 
+        }
+        return await res.json();
+      } catch (err) {
+        console.error("Error en me():", err);
+        return { authenticated: false, roles: [] };
+      }
+    }
+
+    /**
+     * Cierra la sesión del backend
+     */
+    async function logout() {
+      try {
+        await fetch(`${AUTH_API_URL}/logout`, { ...API_OPTS, method: "POST" });
+      } catch (err) {
+        console.error("Error en logout():", err);
+      }
+      // Redirige al login de la TIENDA (no del admin)
+      location.href = '../pages/login.html';
+    }
+
+
+    // === 2. ELEMENTOS DEL DOM ===
+    const loadingMessage = document.getElementById('loading-message');
+    const adminSidebar = document.getElementById('admin-sidebar');
+    const adminEmail = document.getElementById('admin-email');
+    const logoutButton = document.getElementById('logout-button');
+    const sectionTitle = document.getElementById('section-title');
+    const toastContainer = document.getElementById('toast-container');
+    
+    // Secciones
+    const sections = {
+      dashboard: document.getElementById('dashboard-section'),
+      products: document.getElementById('products-section'),
+      customers: document.getElementById('customers-section'),
+      orders: document.getElementById('orders-section'),
+      stats: document.getElementById('stats-section'),
+      config: document.getElementById('config-section')
+    };
+
+    // Productos
+    const productsTableBody = document.getElementById('products-table-body');
+    const productModal = document.getElementById('product-modal');
+    const productForm = document.getElementById('product-form');
+    const productModalTitle = document.getElementById('product-modal-title');
+
+    // Clientes
+    const customersTableBody = document.getElementById('customers-table-body');
+    const customerModal = document.getElementById('customer-modal');
+    const customerForm = document.getElementById('customer-form');
+    const customerModalTitle = document.getElementById('customer-modal-title');
+    
+    // Borrado
+    const deleteModal = document.getElementById('delete-modal');
+    const confirmDeleteButton = document.getElementById('confirm-delete-button');
+    const deleteItemTypeSpan = document.getElementById('delete-item-type');
+
+    let currentProductId = null;
+    let currentCustomerId = null;
+    let itemToDelete = { id: null, type: null }; 
+
+    // === 3. LÓGICA DE UTILIDADES (Modales, Toast) ===
+    function openModal(modalElement) {
+      modalElement.style.display = 'flex';
+      setTimeout(() => modalElement.classList.add('show'), 10);
+    }
+
+    function closeModal(modalElement) {
+      modalElement.classList.remove('show');
+      setTimeout(() => modalElement.style.display = 'none', 300);
+    }
+    
+    function showToast(message, type = 'success') {
+      const colors = {
+        success: 'bg-green-500',
+        error: 'bg-red-500',
+        info: 'bg-blue-500'
+      };
+      const icon = {
+        success: 'bi-check-circle-fill',
+        error: 'bi-exclamation-triangle-fill',
+        info: 'bi-info-circle-fill'
+      }
+
+      const toast = document.createElement('div');
+      toast.className = `flex items-center w-full max-w-xs p-4 text-white ${colors[type]} rounded-lg shadow-lg transform transition-all duration-300 translate-x-full opacity-0`;
+      toast.innerHTML = `
+        <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-lg">
+            <i class="bi ${icon[type]}"></i>
+        </div>
+        <div class="ml-3 text-sm font-medium">${message}</div>
+        <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white/20 text-white hover:text-white-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-white/30 inline-flex items-center justify-center h-8 w-8">
+            <i class="bi bi-x-lg"></i>
+        </button>
+      `;
+      
+      toast.querySelector('button').onclick = () => {
+        toast.classList.add('opacity-0', 'scale-90');
+        setTimeout(() => toast.remove(), 300);
+      };
+      
+      toastContainer.appendChild(toast);
+      
+      // Animación de entrada
+      setTimeout(() => {
+        toast.classList.remove('translate-x-full', 'opacity-0');
+      }, 100);
+
+      // Animación de salida automática
+      setTimeout(() => {
+        if(toast.parentElement) { // Solo si no se ha borrado manualmente
+          toast.classList.add('opacity-0', 'scale-90');
+          setTimeout(() => toast.remove(), 300);
+        }
+      }, 4000);
+    }
+    
+    // === 4. LÓGICA DE NAVEGACIÓN (Sidebar) ===
+    function handleSidebarClick(event) {
+      event.preventDefault();
+      const clickedLink = event.target.closest('.sidebar-link');
+      
+      // Ignorar si no es un link de sección (ej. "Volver" o ya activo)
+      if (!clickedLink || !clickedLink.dataset.section || clickedLink.classList.contains('active-nav')) {
+        return;
+      }
+
+      const sectionName = clickedLink.dataset.section;
+      if (!sectionName) return;
+
+      // Ocultar todas las secciones
+      Object.values(sections).forEach(section => section.classList.add('hidden'));
+      
+      // Quitar 'active' a todos los links
+      adminSidebar.querySelectorAll('.sidebar-link[data-section]').forEach(link => link.classList.remove('active-nav'));
+
+      // Mostrar la sección clickeada
+      if (sections[sectionName]) {
+        sections[sectionName].classList.remove('hidden');
+      }
+      
+      // Añadir 'active' al link clickeado
+      clickedLink.classList.add('active-nav');
+      
+      // Actualizar título del header
+      sectionTitle.textContent = clickedLink.querySelector('span').textContent;
+      
+      // Cargar los datos de la pestaña
+      if (sectionName === 'products') {
+        loadProducts();
+      } else if (sectionName === 'customers') {
+        loadCustomers();
+      }
+    }
+
+
+    // === 5. PUNTO DE ENTRADA (AUTH GUARD) ===
+    document.addEventListener('DOMContentLoaded', async () => {
+          
+        try {
+        const user = await me();
+        if (!user.authenticated || !user.roles.includes('ROLE_ADMIN')) {
+          // Si no es admin, mostrar error y redirigir
+          loadingMessage.innerHTML = '<i class="bi bi-exclamation-triangle-fill text-4xl text-red-500 me-3"></i> Acceso denegado. Redirigiendo al login...';
+          loadingMessage.className = 'flex items-center justify-center h-64 text-red-600 text-lg';
+          setTimeout(() => {
+            window.location.href = '../pages/login.html'; // Redirigir al login de la TIENDA
+          }, 3000);
+          return;
+        }
+
+        // Si es Admin, ocultar el mensaje de carga y mostrar el dashboard
+        loadingMessage.classList.add('hidden');
+        adminEmail.textContent = user.email; // Poner email en la sidebar
+        
+        // No cargamos productos al inicio, el dashboard es la vista por defecto
+
+      } catch (error) {
+        console.error('Error al verificar la autenticación:', error);
+        loadingMessage.innerHTML = '<i class="bi bi-exclamation-triangle-fill text-4xl text-red-500 me-3"></i> Error al verificar permisos. Intenta iniciar sesión.';
+        loadingMessage.className = 'flex items-center justify-center h-64 text-red-600 text-lg';
+      } 
+
+
+
+      // 4. Añadir listeners
+      adminSidebar.addEventListener('click', handleSidebarClick);
+      logoutButton.addEventListener('click', logout);
+      
+      productForm.addEventListener('submit', handleSaveProduct);
+      customerForm.addEventListener('submit', handleSaveCustomer);
+      
+      productsTableBody.addEventListener('click', handleTableClick);
+      customersTableBody.addEventListener('click', handleTableClick);
+      
+      confirmDeleteButton.addEventListener('click', handleDelete);
+    });
+    
+    /**
+     * Maneja todos los clics en las tablas (Editar/Borrar)
+     */
+    function handleTableClick(event) {
+      const editButton = event.target.closest('.btn-edit');
+      const deleteButton = event.target.closest('.btn-delete');
+      const tableId = event.currentTarget.id; 
+
+      if (tableId === 'products-table-body') {
+        if (editButton) openProductModal(editButton.dataset.id);
+        else if (deleteButton) openDeleteModal(deleteButton.dataset.id, 'product');
+      } else if (tableId === 'customers-table-body') {
+         if (editButton) openCustomerModal(editButton.dataset.id);
+         else if (deleteButton) openDeleteModal(deleteButton.dataset.id, 'customer');
+      }
+    }
+
+
+    // ==================================
+    // LÓGICA DE PRODUCTOS (CRUD)
+    // ==================================
+    
+    async function loadProducts() {
+      try {
+        productsTableBody.innerHTML = '<tr><td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500"><i class="bi bi-arrow-repeat text-2xl animate-spin"></i></td></tr>';
+        const response = await fetch(`${ADMIN_API_URL}/products`, { ...API_OPTS, method: 'GET' });
+        if (!response.ok) throw new Error(`Error del servidor: ${response.status}`);
+        const products = await response.json();
+        
+        if (products.length === 0) {
+          productsTableBody.innerHTML = '<tr><td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500">No se encontraron productos. ¡Crea el primero!</td></tr>';
+          return;
+        }
+
+        productsTableBody.innerHTML = '';
+        products.forEach(product => {
+          const row = document.createElement('tr');
+          row.className = 'hover:bg-gray-50 transition-colors';
+          row.innerHTML = `
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${product.id}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">${product.name}</td>
+            <td class="px-6 py-4 text-sm text-gray-600 truncate" style="max-width: 300px;">${product.description}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
+              <button data-id="${product.id}" class="btn-edit text-xs font-semibold text-indigo-600 bg-indigo-100 hover:bg-indigo-200 rounded-full py-1 px-3 transition-colors">
+                <i class="bi bi-pencil-fill me-1"></i> Editar
+              </button>
+              <button data-id="${product.id}" class="btn-delete text-xs font-semibold text-red-600 bg-red-100 hover:bg-red-200 rounded-full py-1 px-3 transition-colors">
+                <i class="bi bi-trash-fill me-1"></i> Eliminar
+              </button>
+            </td>
+          `;
+          productsTableBody.appendChild(row);
+        });
+      } catch (error) {
+        console.error('Error al cargar productos:', error);
+        productsTableBody.innerHTML = `<tr><td colspan="4" class="px-6 py-4 text-center text-sm text-red-600">Error al cargar productos. Revisa la consola.</td></tr>`;
+      }
+    }
+
+    async function openProductModal(id = null) {
+      currentProductId = id;
+      productForm.reset();
+      if (id) {
+        productModalTitle.textContent = 'Editar Producto';
+        try {
+          const response = await fetch(`${ADMIN_API_URL}/products/${id}`, { ...API_OPTS, method: 'GET' });
+          if (!response.ok) throw new Error('No se pudo cargar el producto');
+          const product = await response.json();
+          document.getElementById('product-name').value = product.name;
+          document.getElementById('product-description').value = product.description;
+        } catch (error) {
+          console.error('Error al cargar producto para editar:', error);
+          showToast('No se pudieron cargar los datos del producto', 'error');
+          return;
+        }
+      } else {
+        productModalTitle.textContent = 'Crear Nuevo Producto';
+      }
+      openModal(productModal);
+    }
+
+    function closeProductModal() {
+      closeModal(productModal);
+    }
+
+    async function handleSaveProduct(event) {
+      event.preventDefault();
+      const productData = {
+        name: document.getElementById('product-name').value,
+        description: document.getElementById('product-description').value
+      };
+      const method = currentProductId ? 'PUT' : 'POST';
+      const url = currentProductId
+        ? `${ADMIN_API_URL}/products/${currentProductId}`
+        : `${ADMIN_API_URL}/products`;
+
+      try {
+        const response = await fetch(url, {
+          ...API_OPTS,
+          method: method,
+          body: JSON.stringify(productData)
+        });
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || `Error ${response.status}`);
+        }
+        closeProductModal();
+        await loadProducts();
+        showToast(currentProductId ? 'Producto actualizado' : 'Producto creado', 'success');
+      } catch (error) {
+        console.error('Error al guardar el producto:', error);
+        showToast(`Error al guardar: ${error.message}`, 'error');
+      }
+    }
+    
+    // ==================================
+    // LÓGICA DE CLIENTES (CRUD)
+    // ==================================
+    
+    async function loadCustomers() {
+      try {
+        customersTableBody.innerHTML = '<tr><td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500"><i class="bi bi-arrow-repeat text-2xl animate-spin"></i></td></tr>';
+        
+        const response = await fetch(`${ADMIN_API_URL}/customers`, { ...API_OPTS, method: 'GET' });
+        if (!response.ok) throw new Error(`Error del servidor: ${response.status}`);
+        const customers = await response.json();
+        
+        if (customers.length === 0) {
+          customersTableBody.innerHTML = '<tr><td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">No se encontraron clientes.</td></tr>';
+          return;
+        }
+
+        customersTableBody.innerHTML = '';
+        customers.forEach(customer => {
+          const row = document.createElement('tr');
+          row.className = 'hover:bg-gray-50 transition-colors';
+          row.innerHTML = `
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${customer.id}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">${customer.firstName} ${customer.lastName}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${customer.email}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${customer.phoneNumber}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${customer.documentType} ${customer.documentNumber}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
+              <button data-id="${customer.id}" class="btn-edit text-xs font-semibold text-indigo-600 bg-indigo-100 hover:bg-indigo-200 rounded-full py-1 px-3 transition-colors">
+                <i class="bi bi-pencil-fill me-1"></i> Editar
+              </button>
+              <button data-id="${customer.id}" class="btn-delete text-xs font-semibold text-red-600 bg-red-100 hover:bg-red-200 rounded-full py-1 px-3 transition-colors">
+                <i class="bi bi-trash-fill me-1"></i> Eliminar
+              </button>
+            </td>
+          `;
+          customersTableBody.appendChild(row);
+        });
+      } catch (error) {
+        console.error('Error al cargar clientes:', error);
+        customersTableBody.innerHTML = `<tr><td colspan="6" class="px-6 py-4 text-center text-sm text-red-600">Error al cargar clientes. Revisa la consola.</td></tr>`;
+      }
+    }
+    
+    async function openCustomerModal(id = null) {
+      currentCustomerId = id;
+      customerForm.reset();
+      if (id) {
+        customerModalTitle.textContent = 'Editar Cliente';
+        try {
+          const response = await fetch(`${ADMIN_API_URL}/customers/${id}`, { ...API_OPTS, method: 'GET' });
+          if (!response.ok) throw new Error('No se pudo cargar el cliente');
+          const customer = await response.json();
+          
+          document.getElementById('customer-firstName').value = customer.firstName;
+          document.getElementById('customer-lastName').value = customer.lastName;
+          document.getElementById('customer-email').value = customer.email;
+          document.getElementById('customer-phone').value = customer.phoneNumber;
+          document.getElementById('customer-docType').value = customer.documentType;
+          document.getElementById('customer-docNum').value = customer.documentNumber;
+          document.getElementById('customer-type').value = customer.customerType;
+          
+        } catch (error) {
+          console.error('Error al cargar cliente para editar:', error);
+          showToast('No se pudieron cargar los datos del cliente', 'error');
+          return;
+        }
+      } else {
+        customerModalTitle.textContent = 'Crear Nuevo Cliente';
+      }
+      openModal(customerModal);
+    }
+
+    function closeCustomerModal() {
+      closeModal(customerModal);
+    }
+    
+    async function handleSaveCustomer(event) {
+      event.preventDefault();
+      const customerData = {
+        firstName: document.getElementById('customer-firstName').value,
+        lastName: document.getElementById('customer-lastName').value,
+        email: document.getElementById('customer-email').value,
+        phoneNumber: document.getElementById('customer-phone').value,
+        documentType: document.getElementById('customer-docType').value,
+        documentNumber: document.getElementById('customer-docNum').value,
+        customerType: document.getElementById('customer-type').value
+      };
+      
+      const method = currentCustomerId ? 'PUT' : 'POST';
+      const url = currentCustomerId
+        ? `${ADMIN_API_URL}/customers/${currentCustomerId}`
+        : `${ADMIN_API_URL}/customers`;
+
+      try {
+        const response = await fetch(url, {
+          ...API_OPTS,
+          method: method,
+          body: JSON.stringify(customerData)
+        });
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || `Error ${response.status}`);
+        }
+        closeCustomerModal();
+        await loadCustomers();
+        showToast(currentCustomerId ? 'Cliente actualizado' : 'Cliente creado', 'success');
+      } catch (error) {
+        console.error('Error al guardar el cliente:', error);
+        showToast(`Error al guardar: ${error.message}`, 'error');
+      }
+    }
+    
+    // ==================================
+    // LÓGICA DE BORRADO (Genérica)
+    // ==================================
+
+    function openDeleteModal(id, type) {
+      itemToDelete = { id, type };
+      deleteItemTypeSpan.textContent = type === 'product' ? 'producto' : 'cliente';
+      openModal(deleteModal);
+    }
+    
+    function closeDeleteModal() {
+      itemToDelete = { id: null, type: null };
+      closeModal(deleteModal);
+    }
+    
+    async function handleDelete() {
+      if (!itemToDelete.id || !itemToDelete.type) return;
+      
+      const url = `${ADMIN_API_URL}/${itemToDelete.type}s/${itemToDelete.id}`;
+      
+      try {
+        const response = await fetch(url, { ...API_OPTS, method: 'DELETE' });
+        
+        if (!response.ok) {
+           throw new Error(`Error del servidor: ${response.status}`);
+        }
+        
+        closeDeleteModal();
+        showToast(itemToDelete.type === 'product' ? 'Producto eliminado' : 'Cliente eliminado', 'success');
+        
+        // Recargar la tabla que corresponda
+        if (itemToDelete.type === 'product') {
+          await loadProducts();
+        } else if (itemToDelete.type === 'customer') {
+          await loadCustomers();
+        }
+        
+      } catch (error) {
+        console.error('Error al eliminar:', error);
+        showToast(`Error al eliminar: ${error.message}`, 'error');
+      }
+    }
+
+    // Hacemos las funciones globales para que los botones 'onclick' las vean
+    window.openProductModal = openProductModal;
+    window.closeProductModal = closeProductModal;
+    window.openCustomerModal = openCustomerModal;
+    window.closeCustomerModal = closeCustomerModal;
+    window.openDeleteModal = openDeleteModal;
+    window.closeDeleteModal = closeDeleteModal;
+
+  </script>
+
+</body>
+</html>

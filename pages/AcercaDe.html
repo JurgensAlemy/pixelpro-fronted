@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../assets/favicons/favicon.ico" type="image/x-icon" />
+
+  <!--Bootstrap-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Google Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/AcercaDeEstilo.css">
+
+  <title>Acerca de</title>
+</head>
+
+<body>
+
+  <!-- Header cargado automáticamente -->
+  <header id="header"></header>
+
+  <section>
+    <img src="/assets/imgs/img-quienesSomos.webp" class="d-block w-100 img-AcercaDe" alt="imagen">
+  </section>
+
+  <br><br>
+  <section class="descripcion d-flex justify-content-center align-items-center">
+    <div class="contenedor text-center">
+      <h2 class="subtitulo3">Tu aliado en accesorios de cómputo</h2>
+      <p class="texto3">
+        Somos una microempresa dedicada a la venta de accesorios y componentes de computadoras. Nos
+        especializamos en ofrecer productos de calidad como teclados, mouses, audífonos, memorias, discos duros,
+        procesadores y otros repuestos esenciales para el buen funcionamiento de tu PC. Nuestro compromiso es
+        brindar atención personalizada, precios accesibles y soluciones tecnológicas adaptadas a las necesidades
+        de cada cliente.
+      </p>
+    </div>
+  </section>
+
+  <section class="container my-5" style="font-family: 'Roboto', sans-serif;">
+    <div class="row text-center">
+      <!-- Misión -->
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-lg rounded-3 h-100">
+          <div class="card-body">
+            <span class="material-icons md-48 text-primary">explore</span>
+            <h3 class="card-title mt-3">Misión</h3>
+            <p class="card-text">
+              Ofrecer a entusiastas de la tecnología, gamers y profesionales los mejores accesorios y
+              componentes de computación, garantizando productos de alta calidad, un rendimiento superior
+              y un servicio al cliente excepcional para optimizar y personalizar su experiencia digital.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visión -->
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-lg rounded-3 h-100">
+          <div class="card-body">
+            <span class="material-icons md-48 text-success">visibility</span>
+            <h3 class="card-title mt-3">Visión</h3>
+            <p class="card-text">
+              Ser el destino líder y de confianza a nivel nacional para todo lo relacionado con el
+              hardware
+              de computación, impulsando la innovación en la industria y empoderando a nuestra comunidad
+              para construir y mejorar sus equipos soñados.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Valores -->
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-lg rounded-3 h-100">
+          <div class="card-body">
+            <span class="material-icons md-48 text-danger">favorite</span>
+            <h3 class="card-title mt-3">Valores</h3>
+            <p class="card-text">
+              Compromiso, pasión por la tecnología, innovación, responsabilidad y confianza guían nuestro
+              trabajo día a día.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion2 pt-5">
+    <div class="container">
+      <div class="row align-items-center my-5">
+        <!-- Texto a la izquierda -->
+        <div class="col-md-6">
+          <h2 class="text-center subtitulo4">
+            Encuentra tu accesorio de tu marca favorita
+          </h2>
+          <p class="text-center texto4">
+            Contamos con diferentes productos de diferentes marcas para que puedas elegir la que más te
+            guste.
+          </p>
+        </div>
+
+        <!-- Slider a la derecha -->
+        <div class="col-md-6 slider-marca">
+          <div id="sliderAuto" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2500">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="/assets/imgs/logo-marcaAsus.webp" class=" A-Img d-block w-100 rounded" alt="Imagen 1">
+              </div>
+              <div class="carousel-item">
+                <img src="/assets/imgs/logo-marcaLg.webp" class="A-Img d-block w-100 rounded" alt="Imagen 2">
+              </div>
+              <div class="carousel-item">
+                <img src="/assets/imgs/logo-marcaSamsung.webp" class="A-Img d-block w-100 rounded" alt="Imagen 3">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer cargado automáticamente -->
+  <footer id="footer" class="bg-light pt-5"></footer>
+
+  <!-- Bootstrap JS con Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Script para cargar header y footer -->
+  <script type="module" src="/js/include.js"></script>
+  <script type="module" src="/js/auth/auth-header.js"></script>
+
+</body>
+
+</html>

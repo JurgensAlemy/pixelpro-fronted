@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="../assets/favicons/favicon.ico" type="image/x-icon" />
+  <title>Preguntas Frecuentes | PixelPro</title>
+
+  <!-- Bootstrap CSS (elige la versión que uses en el resto del sitio) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Bootstrap Icons (opcional pero recomendado para consistencia) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+
+  <!-- CSS unificado (el mismo que usas en Políticas) -->
+  <link rel="stylesheet" href="../css/politicas.css" />
+</head>
+
+<body>
+  <!-- HEADER cargado por include.js -->
+  <header id="header"></header>
+
+  <!-- CONTENIDO -->
+  <main class="container py-5">
+    <h2 class="pixel-font text-center mb-5">Preguntas Frecuentes</h2>
+
+    <!-- Tabs -->
+    <ul class="nav nav-tabs justify-content-center mb-4" id="faqTabs" role="tablist">
+      <li class="nav-item">
+        <button class="nav-link active" id="envios-tab" data-bs-toggle="tab" data-bs-target="#envios" type="button"
+          role="tab" aria-controls="envios" aria-selected="true">Envíos</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" id="pagos-tab" data-bs-toggle="tab" data-bs-target="#pagos" type="button" role="tab"
+          aria-controls="pagos" aria-selected="false">Pagos</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" id="productos-tab" data-bs-toggle="tab" data-bs-target="#productos" type="button"
+          role="tab" aria-controls="productos" aria-selected="false">Productos</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" id="cuenta-tab" data-bs-toggle="tab" data-bs-target="#cuenta" type="button" role="tab"
+          aria-controls="cuenta" aria-selected="false">Cuenta</button>
+      </li>
+    </ul>
+
+    <!-- Contenido Tabs -->
+    <div class="tab-content" id="faqTabsContent">
+      <!-- Envíos -->
+      <div class="tab-pane fade show active" id="envios" role="tabpanel" aria-labelledby="envios-tab">
+        <div class="accordion" id="accordionEnvios">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#envio1"
+                aria-expanded="false" aria-controls="envio1">
+                ¿Realizan envíos a todo el Perú?
+              </button>
+            </h2>
+            <div id="envio1" class="accordion-collapse collapse" data-bs-parent="#accordionEnvios">
+              <div class="accordion-body">
+                Sí, realizamos envíos a todo el país mediante Olva, Shalom y servicios propios en Lima Metropolitana.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#envio2"
+                aria-expanded="false" aria-controls="envio2">
+                ¿Cuánto demora el envío?
+              </button>
+            </h2>
+            <div id="envio2" class="accordion-collapse collapse" data-bs-parent="#accordionEnvios">
+              <div class="accordion-body">
+                En Lima de 1 a 2 días hábiles. Para provincias, entre 2 a 5 días hábiles dependiendo del destino.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagos -->
+      <div class="tab-pane fade" id="pagos" role="tabpanel" aria-labelledby="pagos-tab">
+        <div class="accordion" id="accordionPagos">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#pago1"
+                aria-expanded="false" aria-controls="pago1">
+                ¿Qué métodos de pago aceptan?
+              </button>
+            </h2>
+            <div id="pago1" class="accordion-collapse collapse" data-bs-parent="#accordionPagos">
+              <div class="accordion-body">
+                Aceptamos tarjetas de crédito/débito, Yape, Plin y transferencias bancarias.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#pago2"
+                aria-expanded="false" aria-controls="pago2">
+                ¿Puedo pagar contra entrega?
+              </button>
+            </h2>
+            <div id="pago2" class="accordion-collapse collapse" data-bs-parent="#accordionPagos">
+              <div class="accordion-body">
+                Por ahora no ofrecemos pago contra entrega, pero puedes usar pagos digitales seguros.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Productos -->
+      <div class="tab-pane fade" id="productos" role="tabpanel" aria-labelledby="productos-tab">
+        <div class="accordion" id="accordionProductos">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#prod1"
+                aria-expanded="false" aria-controls="prod1">
+                ¿Los accesorios son originales?
+              </button>
+            </h2>
+            <div id="prod1" class="accordion-collapse collapse" data-bs-parent="#accordionProductos">
+              <div class="accordion-body">
+                Sí, trabajamos con marcas originales y seleccionadas por su calidad y durabilidad.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#prod2"
+                aria-expanded="false" aria-controls="prod2">
+                ¿Tienen productos con luces RGB?
+              </button>
+            </h2>
+            <div id="prod2" class="accordion-collapse collapse" data-bs-parent="#accordionProductos">
+              <div class="accordion-body">
+                ¡Claro! Muchos de nuestros teclados, mouse y ventiladores incluyen iluminación RGB.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cuenta -->
+      <div class="tab-pane fade" id="cuenta" role="tabpanel" aria-labelledby="cuenta-tab">
+        <div class="accordion" id="accordionCuenta">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#cuenta1"
+                aria-expanded="false" aria-controls="cuenta1">
+                ¿Necesito una cuenta para comprar?
+              </button>
+            </h2>
+            <div id="cuenta1" class="accordion-collapse collapse" data-bs-parent="#accordionCuenta">
+              <div class="accordion-body">
+                No es obligatorio, pero registrarte te permite hacer seguimiento a tus pedidos y recibir descuentos.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#cuenta2"
+                aria-expanded="false" aria-controls="cuenta2">
+                ¿Cómo recupero mi contraseña?
+              </button>
+            </h2>
+            <div id="cuenta2" class="accordion-collapse collapse" data-bs-parent="#accordionCuenta">
+              <div class="accordion-body">
+                Desde la sección de login, haz clic en "¿Olvidaste tu contraseña?" y sigue las instrucciones.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER cargado por include.js -->
+  <footer id="footer"></footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Script que inserta header.html y footer.html -->
+  <script type="module" src="/js/include.js"></script>
+  <script type="module" src="/js/auth/auth-header.js"></script>
+</body>
+
+</html>
