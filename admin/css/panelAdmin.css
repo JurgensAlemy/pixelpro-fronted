@@ -1,0 +1,125 @@
+/* panelAdmin.css
+   Estilos que complementan Tailwind: glass UI, animaciones, sidebar states.
+*/
+
+/* Reset ligero para componentes */
+:root {
+  --glass-bg: rgba(255,255,255,0.55);
+  --glass-border: rgba(255,255,255,0.12);
+  --glass-blur: 8px;
+  --accent: linear-gradient(135deg,#06b6d4,#7c3aed);
+}
+
+/* SIDEBAR */
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  color: rgb(209 213 219);
+  border-radius: 0.75rem;
+  transition: background-color .2s, color .2s, transform .12s;
+  text-decoration: none;
+}
+.sidebar-link i { font-size: 1.05rem; width: 1.2rem; text-align: center; }
+.sidebar-link:hover {
+  background-color: rgba(255,255,255,0.03);
+  color: #fff;
+  transform: translateX(4px);
+}
+.sidebar-link.active-nav {
+  background: linear-gradient(90deg, rgba(14,165,233,0.14), rgba(99,102,241,0.06));
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(124,58,237,0.08);
+}
+
+/* GLASS CARD */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+}
+
+/* MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(7,12,20,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 240ms ease;
+}
+.modal.show {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-content {
+  transform: translateY(8px) scale(.98);
+  transition: transform 260ms cubic-bezier(.2,.9,.3,1), opacity 200ms;
+  opacity: 0;
+  border-radius: 14px;
+}
+.modal.show .modal-content {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* BUTTONS */
+.btn-primary {
+  background: var(--accent);
+  color: white;
+  padding: 0.55rem 0.9rem;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(99,102,241,0.12);
+  transition: transform .12s, opacity .12s;
+}
+.btn-primary:hover { transform: translateY(-2px); opacity: .98; }
+.btn-ghost {
+  background: transparent;
+  border: 1px solid rgba(15,23,42,0.06);
+  padding: 0.45rem 0.7rem;
+  border-radius: 10px;
+}
+
+/* TOASTS */
+@keyframes toastIn {
+  from { transform: translateX(12px) scale(.98); opacity: 0; }
+  to { transform: translateX(0) scale(1); opacity: 1; }
+}
+@keyframes toastOut {
+  from { transform: translateX(0) scale(1); opacity: 1; }
+  to { transform: translateX(12px) scale(.98); opacity: 0; }
+}
+#toast-container > div {
+  pointer-events: auto;
+  min-width: 220px;
+  max-width: 360px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: white;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.08);
+  animation: toastIn .25s ease;
+}
+#toast-container > div.hide {
+  animation: toastOut .3s ease forwards;
+}
+
+/* Table small polish */
+table { border-collapse: collapse; }
+thead th { background: transparent; }
+tbody tr:hover { background: rgba(15,23,42,0.03); }
+
+/* Tiny animation for stat numbers */
+.count-up {
+  transition: all 400ms cubic-bezier(.2,.9,.3,1);
+}
+
+/* Accessibility: focus */
+.sidebar-link:focus { outline: 2px solid rgba(99,102,241,0.24); outline-offset: 2px; }

@@ -1,74 +1,114 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const productos = document.querySelectorAll(".producto");
+// js/productos.js
+// ¡ESTE SCRIPT SÓLO DEBE CARGARSE EN "productos.html"!
 
-    // --- FILTRO POR PARÁMETROS EN LA URL (para entrar directo desde el header) ---
-    const urlParams = new URLSearchParams(window.location.search);
-    const categoriaParam = urlParams.get("categoria");
+// Variables para el modal
+let modalInstance = null;
+let detalleModal = null;
+let productoActualParaAgregar = null;
 
-    if (categoriaParam) {
-        productos.forEach(prod => {
-            prod.style.display =
-                categoriaParam === "all" || prod.dataset.categoria === categoriaParam
-                    ? "block"
-                    : "none";
+document.addEventListener('DOMContentLoaded', function () {
+    detalleModal = document.getElementById('detalleModal');
+    
+    // Verificación de seguridad
+    if (!detalleModal) {
+         console.warn("No se encontró 'detalleModal'. Este script es para productos.html");
+         return; 
+    }
+    
+    modalInstance = new bootstrap.Modal(detalleModal);
+
+    // Asignar evento a TODOS los botones "Ver Detalles"
+    document.querySelectorAll('.producto .btn-outline-primary').forEach(boton => {
+        boton.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            const tarjeta = this.closest('.producto');
+            const nombre = tarjeta.dataset.nombre;
+            const descripcion = tarjeta.dataset.descripcion;
+            const precioTexto = tarjeta.querySelector('.text-primary').textContent.replace('S/.', '');
+            const precio = parseFloat(precioTexto);
+            const imagen = tarjeta.querySelector('.card-img-top').src;
+
+            productoActualParaAgregar = {
+                id: nombre.toLowerCase().replace(/ /g, '-'),
+                nombre: nombre,
+                precio: precio,
+                imagen: imagen
+            };
+
+            document.getElementById('detalleModalLabel').textContent = nombre;
+            document.getElementById('detalleTitulo').textContent = nombre;
+            document.getElementById('detalleDescripcion').textContent = descripcion;
+            document.getElementById('detallePrecio').textContent = precio.toFixed(2);
+            document.getElementById('detalleImagen').src = imagen;
+            document.getElementById('cantidad').value = 1;
+
+            modalInstance.show();
+        });
+    });
+
+    // Lógica del modal de carrito (si existe en esta página)
+    const modalCarrito = document.getElementById('carritoModal');
+    if (modalCarrito) {
+        // Cuando el modal se vaya a ABRIR, actualiza su contenido.
+        modalCarrito.addEventListener('show.bs.modal', () => {
+            // "mostrarCarrito()" ahora vive en carrito.js,
+            // pero si decidimos moverla a global, esto funcionaría.
+            // Por ahora, lo dejamos así.
+            // Si tienes un modal de carrito en productos, necesitaremos
+            // la función "mostrarCarrito" también en cart-global.js
+        });
+    }
+});
+
+// Esta es la función que se llama desde tu modal
+function agregarAlCarrito() {
+    if (!productoActualParaAgregar) return;
+
+    const cantidad = parseInt(document.getElementById('cantidad').value) || 1;
+
+    // 1. Cargar el carrito (función de cart-global.js)
+    let carrito = getCarritoDesdeStorage();
+
+    const productoExistente = carrito.productos.find(p => p.id === productoActualParaAgregar.id);
+
+    if (productoExistente) {
+        productoExistente.cantidad += cantidad;
+    } else {
+        carrito.productos.push({
+            ...productoActualParaAgregar,
+            cantidad: cantidad
         });
     }
 
-    // --- Filtro por categorías (event delegation en esta página) ---
-    document.addEventListener("click", e => {
-        const link = e.target.closest(".category-link");
-        if (link) {
-            e.preventDefault();
-            const categoria = link.getAttribute("data-category");
+    // 3. Guardar el carrito (función de cart-global.js)
+    guardarCarritoEnStorage(carrito);
 
-            // Redirigir si no estamos en productos.html
-            if (!document.querySelector("#listaProductos")) {
-                window.location.href = `/pages/productos.html?categoria=${categoria}`;
-                return;
-            }
+    modalInstance.hide();
+    
+    // Si no tienes esta función, puedes borrar la línea
+    if(typeof mostrarNotificacion === 'function') {
+        mostrarNotificacion(`${productoActualParaAgregar.nombre} (x${cantidad}) agregado al carrito.`, 'success');
+    }
 
-            productos.forEach(prod => {
-                prod.style.display =
-                    categoria === "all" || prod.dataset.categoria === categoria
-                        ? "block"
-                        : "none";
-            });
-        }
-    });
-});
-document.addEventListener("DOMContentLoaded", () => {
-    const botonesDetalles = document.querySelectorAll(".producto .btn");
-
-    botonesDetalles.forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-            e.preventDefault();
-
-            const productoCard = btn.closest(".producto");
-            const titulo = productoCard.getAttribute("data-nombre");
-            const imagen = productoCard.querySelector("img").src;
-            const precio = productoCard.querySelector(".text-primary").textContent.replace("S/.", "").trim();
-
-            // Descripción ficticia (puedes personalizarla por producto)
-            const descripcion = productoCard.getAttribute("data-descripcion") || "Descripción no disponible.";
-
-            cargarDetalle(titulo, imagen, descripcion, precio);
-
-            // Abrir modal
-            const detalleModal = new bootstrap.Modal(document.getElementById("detalleModal"));
-            detalleModal.show();
-        });
-    });
-});
-
-function cargarDetalle(titulo, imagen, descripcion, precio) {
-    document.getElementById("detalleTitulo").textContent = titulo;
-    document.getElementById("detalleImagen").src = imagen;
-    document.getElementById("detalleDescripcion").textContent = descripcion;
-    document.getElementById("detallePrecio").textContent = precio;
+    // 4. Actualizar contador (función de cart-global.js)
+    updateCartCounter(); 
 }
 
-function agregarAlCarrito() {
-    const cantidad = document.getElementById("cantidad").value;
-    const titulo = document.getElementById("detalleTitulo").textContent;
-    alert(`Se agregó ${cantidad} unidad(es) de "${titulo}" al carrito.`);
+// Función de Notificación (Opcional, si la usas)
+function mostrarNotificacion(mensaje, tipo) {
+    const notificacion = document.createElement('div');
+    notificacion.className = `alert alert-${tipo === 'error' ? 'danger' : tipo} alert-dismissible fade show position-fixed`;
+    notificacion.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    notificacion.innerHTML = `
+        ${mensaje}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    document.body.appendChild(notificacion);
+
+    setTimeout(() => {
+        if (notificacion.parentNode) {
+            notificacion.remove();
+        }
+    }, 3000);
 }

@@ -268,28 +268,61 @@
   <!-- Scripts -->
   <script type="module" src="/js/include.js"></script>
   <script type="module" src="/js/auth/auth-header.js"></script>
+  
+  <script src="../js/cart-global.js"></script>
   <script src="../js/productos.js"></script>
   <script src="../js/buscador.js"></script>
 
-  <!-- Script de filtros -->
-  <script>
-    function aplicarFiltros() {
-      let filtros = document.querySelectorAll(".filtro:checked");
-      let categoriasSeleccionadas = Array.from(filtros).map(f => f.value);
-      let precioMax = document.getElementById("filtroPrecio").value;
+    <!-- Script de filtros -->
+    <script>
+      function aplicarFiltros() {
+        let filtros = document.querySelectorAll(".filtro:checked");
+        let categoriasSeleccionadas = Array.from(filtros).map((f) => f.value);
+        let precioMax = document.getElementById("filtroPrecio").value;
 
-      document.querySelectorAll(".producto").forEach(prod => {
-        let categoria = prod.dataset.categoria;
-        let precioTexto = prod.querySelector("p").innerText.replace("S/.", "").trim();
-        let precio = parseFloat(precioTexto);
+        document.querySelectorAll(".producto").forEach((prod) => {
+          let categoria = prod.dataset.categoria;
+          let precioTexto = prod
+            .querySelector("p")
+            .innerText.replace("S/.", "")
+            .trim();
+          let precio = parseFloat(precioTexto);
 
-        let cumpleCategoria = categoriasSeleccionadas.length === 0 || categoriasSeleccionadas.includes(categoria);
-        let cumplePrecio = !precioMax || precio <= precioMax;
+          let cumpleCategoria =
+            categoriasSeleccionadas.length === 0 ||
+            categoriasSeleccionadas.includes(categoria);
+          let cumplePrecio = !precioMax || precio <= precioMax;
 
-        prod.style.display = (cumpleCategoria && cumplePrecio) ? "block" : "none";
-      });
-    }
-  </script>
+          prod.style.display =
+            cumpleCategoria && cumplePrecio ? "block" : "none";
+        });
+      }
+    </script>
+        <!-- Modal del Carrito -->
+    <div
+      class="modal fade"
+      id="carritoModal"
+      tabindex="-1"
+      aria-labelledby="carritoModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="carritoModalLabel">🛒 Tu Carrito</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Cerrar"
+            ></button>
+          </div>
+          <div class="modal-body" id="contenidoCarrito">
+            <p class="text-center">Tu carrito está vacío 🛒</p>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 
 

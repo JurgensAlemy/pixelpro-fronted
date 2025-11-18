@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Si ya tiene sesión, también revisamos si es admin
         if (user.roles && user.roles.includes('ROLE_ADMIN')) {
             console.log("Sesión de ADMIN ya activa, redirigiendo a panelAdmin.html");
-            location.href = "/pages/panelAdmin.html"; // Redirigir al panel de admin
+            location.href = "/admin/panelAdmin.html"; // Redirigir al panel de admin
         } else {
             console.log("Sesión de CLIENTE ya activa, redirigiendo a index.html");
             location.href = "/index.html"; // Redirigir al home de la tienda
@@ -37,7 +37,7 @@ window.login = async function () {
         if (data && data.authenticated) {
             // Revisamos los roles que nos devolvió el login
             if (data.roles && data.roles.includes('ROLE_ADMIN')) {
-                location.href = "/pages/panelAdmin.html"; // Redirigir al panel de admin
+                location.href = "/admin/panelAdmin.html"; // Redirigir al panel de admin
             } else {
                 location.href = "/index.html"; // Redirigir al home de la tienda
             }
